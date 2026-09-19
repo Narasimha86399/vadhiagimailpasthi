@@ -1,12 +1,35 @@
-# 📖 తన్నీర్ నిఘంటువు (Tannir Language Multi-Script Dictionary)
+# 📖 తన్నీర్ నిఘంటువు (Tannir Multi-Script Dictionary)
 
-[![Language](https://img.shields.io/badge/Languages-Telugu%20%7C%20Malayalam%20%7C%20Tamil%20%7C%20English-6366f1.svg)](https://github.com)
+[![Languages](https://img.shields.io/badge/Languages-Telugu%20%7C%20Malayalam%20%7C%20Tamil%20%7C%20English-6366f1.svg)](https://github.com)
 [![Words](https://img.shields.io/badge/Words-7%2C585%2B-10b981.svg)](https://github.com)
-[![Categories](https://img.shields.io/badge/Alphabet_Sections-44_Indic_Letters-38bdf8.svg)](https://github.com)
+[![Platform](https://img.shields.io/badge/Platforms-Website%20%7C%20PWA%20%7C%20Android%20APK-38bdf8.svg)](https://github.com)
 [![Deploy](https://img.shields.io/badge/Hosting-GitHub_Pages_Ready-f59e0b.svg)](https://github.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A modern, fast, and multi-script web dictionary portal for the **Tannir (తన్నీర్)** language, featuring **7,585+ words** mapped across **Telugu (తెలుగు)**, **Malayalam (മലയാളം)**, **Tannir in Tamil script (தமிழ்)**, and **English phonetic romanization**.
+A unified **Website**, **Progressive Web App (PWA)**, and **Native Android Application** for the **Tannir (తన్నీర్)** language, featuring **7,585+ words** mapped across **Telugu (తెలుగు)**, **Malayalam (മലയാളം)**, **Tannir in Tamil script (தமிழ்)**, and **English phonetic romanization**.
+
+---
+
+## 🎯 Two Deployment Forms in One Repository
+
+This project is engineered to work seamlessly as **both**:
+
+```
+                              ┌────────────────────────────────────────┐
+                              │     Tannir Dictionary Codebase         │
+                              └───────────────────┬────────────────────┘
+                                                  │
+                    ┌─────────────────────────────┴─────────────────────────────┐
+                    ▼                                                           ▼
+       ┌─────────────────────────┐                                 ┌─────────────────────────┐
+       │   🌐 1. WEBSITE / PWA    │                                 │   📱 2. ANDROID APP     │
+       ├─────────────────────────┤                                 ├─────────────────────────┤
+       │ • GitHub Pages hosting  │                                 │ • Installable .apk file │
+       │ • Instant URL for web   │                                 │ • Offline Android App   │
+       │ • Installable via PWA   │                                 │ • Android Studio build  │
+       │ • Works on any browser  │                                 │ • Native back navigation│
+       └─────────────────────────┘                                 └─────────────────────────┘
+```
 
 ---
 
@@ -24,27 +47,77 @@ A modern, fast, and multi-script web dictionary portal for the **Tannir (తన�
   - Edit or delete entries with real-time `localStorage` persistence.
 - 📤 **Data Export Options**:
   - Download the entire dictionary database as formatted **JSON** or **CSV/Excel** (with UTF-8 BOM encoding for perfect Indic script rendering).
-- 📱 **100% Mobile & Desktop Responsive**:
-  - Built with pure Vanilla HTML5, CSS3 tokens, and ES6+ JavaScript without bloated frameworks or build steps.
-- 🚀 **GitHub Pages Ready**:
-  - Zero-configuration static hosting on GitHub Pages or any CDN.
+- 📲 **Installable PWA & Offline Support**:
+  - Equipped with Service Worker caching (`sw.js`) and Web Manifest (`manifest.json`) for 100% offline usage.
 
 ---
 
-## 📸 Application Preview
+## 🌐 Form 1: Website & PWA Deployment (GitHub Pages)
 
-| Dark Mode | Light Mode |
-| :---: | :---: |
-| High-contrast glassmorphic dark palette with indigo & cyan highlights | Crisp typography and warm readability |
+### Step 1: Upload to GitHub
+```bash
+git remote add origin https://github.com/<YOUR_USERNAME>/<REPO_NAME>.git
+git branch -M main
+git push -u origin main
+```
+
+### Step 2: Turn on GitHub Pages (Free Live Website)
+1. Go to your GitHub repository -> **Settings** ⚙️.
+2. In the left menu, click **Pages**.
+3. Under **Build and deployment** > **Source**, choose **Deploy from a branch**.
+4. Set branch to `main` and folder to `/ (root)`, then click **Save**.
+5. Your website will be live at:
+   ```
+   https://<YOUR_USERNAME>.github.io/<REPO_NAME>/
+   ```
+
+*(Mobile visitors to this URL can also tap **"Add to Home Screen"** or **"Install App"** to install it directly onto their phones!)*
+
+---
+
+## 📱 Form 2: Native Android App (Build APK)
+
+The `android/` directory contains an Android Studio native wrapper app configured with a hardware-accelerated, offline-cached `WebView`.
+
+### To build the Android APK:
+
+#### Option A: Using Android Studio
+1. Open **Android Studio**.
+2. Select **Open an Existing Project** and choose the `android/` folder in this repository.
+3. Click **Build** > **Build Bundle(s) / APK(s)** > **Build APK(s)**.
+4. Android Studio will generate the APK at:
+   ```
+   android/app/build/outputs/apk/debug/app-debug.apk
+   ```
+
+#### Option B: Using Command Line (Gradle)
+```bash
+cd android
+./gradlew assembleDebug
+```
+
+---
+
+## 🔄 Synchronizing Web and Android Assets
+
+Whenever you modify any web files (`index.html`, `css/`, `js/`, `data/`), run the sync script to instantly update the Android assets:
+
+```bash
+npm run sync
+```
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-├── index.html              # Main Single-Page Web Application
+├── index.html              # Main Web Application & PWA Entry Point
+├── manifest.json           # Web App Manifest for PWA App Installation
+├── sw.js                   # Service Worker for 100% Offline Caching
+├── sync-assets.js          # Sync script between Web App and Android App
+├── package.json            # Node project configuration & npm scripts
 ├── css/
-│   └── style.css           # Modern CSS3 Design System & Theme Engine
+│   └── style.css           # Modern CSS3 Glassmorphic Design System
 ├── js/
 │   ├── app.js              # Application Controller & State Manager
 │   ├── dictionary-data.js  # 7,585+ Words Static Database
@@ -52,94 +125,28 @@ A modern, fast, and multi-script web dictionary portal for the **Tannir (తన�
 ├── data/
 │   └── dictionary.json     # Raw JSON Database
 ├── Tannir Dictionary.xlsx  # Original Reference Spreadsheet
-├── android/                # Android Studio Project (WebView Native Wrapper)
-├── .gitignore              # Git Ignore Rules
+├── android/                # Native Android Project (WebView Wrapper)
+│   ├── app/src/main/
+│   │   ├── java/           # Native Java Activity
+│   │   ├── res/            # Android Launcher Icons & Resources
+│   │   └── assets/         # Embedded Offline Web Assets
+│   └── build.gradle
+├── .gitignore              # Clean Git Ignore Rules
 └── README.md               # Project Documentation
 ```
 
 ---
 
-## 🚀 Quick Start (Running Locally)
+## 🚀 Running Locally
 
-Because this web app uses pure standard HTML, CSS, and JavaScript, you can run it immediately without complex installs:
-
-### Option 1: Direct in Browser
-Simply double-click `index.html` or open it in Google Chrome, Microsoft Edge, Firefox, or Safari.
-
-### Option 2: Using Node.js / Local Server
 ```bash
-# Using Python
-python -m http.server 3000
-
-# OR using Node.js
-npx serve -l 3000 .
+# Start local development server
+npm start
 ```
-Then visit `http://localhost:3000` in your web browser.
-
----
-
-## 🌐 How to Deploy to GitHub Pages (Free Live Website)
-
-To publish this website on GitHub and get a free live URL:
-
-1. **Create a GitHub repository** (e.g. `tannir-dictionary` or `own-dictionary`).
-2. **Push the code**:
-   ```bash
-   git remote add origin https://github.com/<YOUR_USERNAME>/<REPO_NAME>.git
-   git branch -M main
-   git push -u origin main
-   ```
-3. **Enable GitHub Pages**:
-   - Go to your repository on GitHub.
-   - Click on **Settings** ⚙️ > **Pages** (in the left sidebar).
-   - Under **Build and deployment** > **Source**, select **Deploy from a branch**.
-   - Under **Branch**, select `main` and folder `/ (root)`, then click **Save**.
-   - Your live website will be accessible at:
-     ```
-     https://<YOUR_USERNAME>.github.io/<REPO_NAME>/
-     ```
-
----
-
-## 📊 Data Schema
-
-Each dictionary entry contains:
-
-```json
-{
-  "id": 1,
-  "letterTe": "ష",
-  "letterMl": "ഷ",
-  "col": "AO",
-  "malayalam": "ഷകടം",
-  "telugu": "షకటం",
-  "tannir": "வண்டலி",
-  "note": "cart / vehicle",
-  "romanTe": "shakatam",
-  "romanMl": "shakatam",
-  "romanTannir": "vandali"
-}
-```
-
----
-
-## 📱 Android App Integration
-
-The `android/` directory contains an Android Studio project that embeds this web application inside an optimized native `WebView`, allowing deployment as an Android APK with offline asset caching.
-
----
-
-## 🤝 Contributing
-
-Contributions, suggestions, and corrections to the Tannir vocabulary are warmly welcome!
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AddWords`)
-3. Commit your Changes (`git commit -m 'Add new words'`)
-4. Push to the Branch (`git push origin feature/AddWords`)
-5. Open a Pull Request
+Open `http://localhost:3000` in any web browser.
 
 ---
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more details.

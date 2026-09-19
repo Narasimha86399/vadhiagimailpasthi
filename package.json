@@ -1,0 +1,23 @@
+{
+  "name": "tannir-dictionary",
+  "version": "1.0.0",
+  "description": "Tannir Language Multi-Script Web and Android Dictionary Application",
+  "main": "index.html",
+  "scripts": {
+    "start": "node -e \"const http = require('http'), fs = require('fs'), path = require('path'); const mime = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml'}; http.createServer((req, res) => { let p = path.join(process.cwd(), req.url === '/' ? 'index.html' : req.url.split('?')[0]); fs.readFile(p, (err, data) => { if (err) { res.writeHead(404); res.end('Not Found'); } else { res.writeHead(200, {'Content-Type': mime[path.extname(p)] || 'text/plain'}); res.end(data); } }); }).listen(3000, () => console.log('Dictionary web app running at http://localhost:3000'));\"",
+    "sync": "node sync-assets.js"
+  },
+  "keywords": [
+    "tannir",
+    "dictionary",
+    "telugu",
+    "malayalam",
+    "tamil",
+    "indic-languages",
+    "android",
+    "pwa",
+    "website"
+  ],
+  "author": "Tannir Language Project",
+  "license": "MIT"
+}
